@@ -1,11 +1,13 @@
 <template>
     <div>
-        <h2>カレンダー{{ currentDate }}</h2>
+        
+        <ScheduleForm :year="year" :month="month" :day="day"></ScheduleForm>
+        <h2>{{ currentDate.format("YYYY年MM月") }}</h2>
         <button @click="prevMonth">前の月</button>
         <button @click="nextMonth">次の月</button>
         <div class="month">
             <div v-for="week, index1 in calendars" :key="index1" class="week">
-                <div v-for="day, index2 in week" :key="index2" class="day">
+                <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day.date)">
                     <div :class="classShading(index1, day.date)">
                         {{ day.date }}
                     </div>
@@ -16,19 +18,25 @@
 </template>
 
 <script>
-//日にちの取得
 import moment from "moment";
+import ScheduleForm from "./ScheduleForm";
 export default {
     name: 'Calendar',
     data() {
         return {
             currentDate: moment(),
+            year : "",
+            month : "",
+            day : "",
         };
     },
     computed: {
         calendars() {
             return this.getCalendar();
         }
+    },
+    components: {
+        ScheduleForm
     },
     methods: {
         getStartDate() {
@@ -91,7 +99,13 @@ export default {
                 return "dark"
             }
         },
-        getDay() {
+        getDay(day) {
+            // //先月と来月を判断できない
+            let date = this.currentDate.format("YYYY-MM-") + day
+            // console.log(date)
+            this.year = this.currentDate.format("YYYY")
+            this.month = this.currentDate.format("MM")
+            this.day = day
             
         }
     },
@@ -101,16 +115,16 @@ export default {
 <style>
 .month {
     max-width:900px;
-    border-top:5px solid red;
+    border-top:1px solid black;
 }
 .week {
     display:flex;
-    border-left:5px solid yellow;
+    border-left:1px solid black;
 }
 .day {
     flex:1;min-height:125px;
-    border-right:5px solid blue;
-    border-bottom:5px solid blue
+    border-right:1px solid black;
+    border-bottom:1px solid black;
 }
 .thin {
     background-color: aqua;
