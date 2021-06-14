@@ -1,6 +1,5 @@
 <template>
     <div>
-        
         <ScheduleForm :year="year" :month="month" :day="day"></ScheduleForm>
         <h2>{{ currentDate.format("YYYY年MM月") }}</h2>
         <button @click="prevMonth">前の月</button>
