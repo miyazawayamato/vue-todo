@@ -6,8 +6,8 @@
         <button @click="nextMonth">次の月</button>
         <div class="month">
             <div v-for="week, index1 in calendars" :key="index1" class="week">
-                <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day.date)">
-                    <div :class="classShading(index1, day.date)">
+                <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day.date)" :class="classShading(index1, day.date)">
+                    <div >
                         {{ day.date }}
                     </div>
                 </div>
@@ -33,6 +33,11 @@ export default {
         calendars() {
             return this.getCalendar();
         }
+    },
+    created: {
+        
+        //取得して
+        //dataに定義する
     },
     components: {
         ScheduleForm
@@ -61,7 +66,10 @@ export default {
             const endDate = this.getEndDate();
             //カレンダーの行数を決定する
             const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
-
+            
+            //その月のデータだけ選んで
+            //startDateの中から日にちを算出
+            
             let calendars = [];
             //週の数だけループ
             for (let week = 0; week < weekNumber; week++) {
@@ -69,11 +77,13 @@ export default {
                 let weekRow = [];
                 //1週間の日にち分(７日)ループ
                 for (let day = 0;  day < 7; day++) {
+                    
                     weekRow.push({
                         date: startDate.get("date"),
                     });
                     //日付を一日ずつ足していく
                     startDate.add(1, "days");
+                    
                 }
                 calendars.push(weekRow);
             }
