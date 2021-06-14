@@ -19,6 +19,32 @@
 <script>
 import moment from "moment";
 import ScheduleForm from "./ScheduleForm";
+const yotei = [
+    {
+        schedule: "2021-06-14/21:00",
+        untilTime: "2021-06-14/22:00",
+        title: "予定A",
+        detail: "予定Aです"
+    },
+    {
+        schedule: "2021-06-15/21:00",
+        untilTime: "2021-06-15/22:00",
+        title: "予定B",
+        detail: "予定Bです"
+    },
+    {
+        schedule: "2021-06-16/21:00",
+        untilTime: "2021-06-16/22:00",
+        title: "予定C",
+        detail: "予定Cです"
+    },
+    {
+        schedule: "2021-06-17/21:00",
+        untilTime: "2021-06-17/22:00",
+        title: "予定C",
+        detail: "予定Cです"
+    },
+]
 export default {
     name: 'Calendar',
     data() {
@@ -119,6 +145,7 @@ export default {
         }
     },
 }
+
 </script>
 
 <style>
