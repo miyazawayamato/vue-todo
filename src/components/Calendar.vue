@@ -129,5 +129,6 @@ export default {
 }
 .thin {
     background-color: aqua;
+    pointer-events: none
 }
 </style>
