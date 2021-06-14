@@ -115,6 +115,7 @@ export default {
 <style>
 .month {
     max-width:900px;
+    margin: 0 auto;
     border-top:1px solid black;
 }
 .week {
@@ -122,7 +123,8 @@ export default {
     border-left:1px solid black;
 }
 .day {
-    flex:1;min-height:125px;
+    flex:1;
+    min-height:125px;
     border-right:1px solid black;
     border-bottom:1px solid black;
 }

@@ -22,10 +22,17 @@ export default {
     },
     methods: {
         postData() {
+            const schedule = this.year + "-" + this.month + "-" + ("0" + this.day).slice(-2) + "&" + this.from
+            const untiltime = this.year + "-" + this.month + "-" + ("0" + this.day).slice(-2) + "&" + this.toTime
             
-            // console.log(this.year)
-            // console.log(this.month)
-            // console.log(this.day)
+            const postData = {
+                schedule : schedule,
+                untiltime : untiltime,
+                title : this.title,
+                text : this.text
+            }
+            
+            console.table(postData)
             
         }
     }
