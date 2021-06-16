@@ -42,7 +42,11 @@ export default {
                 text : this.text
             }
             
-            console.table(postData)
+            // Access to XMLHttpRequest at 'https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev' from origin 'http://localhost:8080' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+            
+            this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=2021-06").then((response) => {
+                console.table(response.data)
+            })
             
         }
     }
