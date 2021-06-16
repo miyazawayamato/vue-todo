@@ -19,6 +19,7 @@
 <script>
 import moment from "moment";
 import ScheduleForm from "./ScheduleForm";
+//  https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev
 const yotei = [
     {
         schedule: "2021-06-14/21:00",
@@ -57,13 +58,9 @@ export default {
     },
     computed: {
         calendars() {
+            
             return this.getCalendar();
         }
-    },
-    created: {
-        
-        //取得して
-        //dataに定義する
     },
     components: {
         ScheduleForm
@@ -93,8 +90,7 @@ export default {
             //カレンダーの行数を決定する
             const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
             
-            //その月のデータだけ選んで
-            //startDateの中から日にちを算出
+            
             
             let calendars = [];
             //週の数だけループ
@@ -104,9 +100,15 @@ export default {
                 //1週間の日にち分(７日)ループ
                 for (let day = 0;  day < 7; day++) {
                     
-                    weekRow.push({
-                        date: startDate.get("date"),
-                    });
+                    // 日にちの取得
+                    // startDate.get("date")
+                    // if (startDate.get("date") === axios) {
+                    //     {ireru}
+                    // }
+                    
+                    weekRow.push({date: startDate.get("date")});
+                    
+                    
                     //日付を一日ずつ足していく
                     startDate.add(1, "days");
                     
