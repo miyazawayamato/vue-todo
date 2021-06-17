@@ -19,7 +19,6 @@
 <script>
 import moment from "moment";
 import ScheduleForm from "./ScheduleForm";
-//  https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev
 const yotei = [
     {
         schedule: "2021-06-14/21:00",
