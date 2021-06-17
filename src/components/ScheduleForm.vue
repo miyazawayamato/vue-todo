@@ -32,21 +32,24 @@ export default {
     },
     methods: {
         postData() {
-            const schedule = this.year + "-" + this.month + "-" + ("0" + this.day).slice(-2) + "&" + this.from
-            const untiltime = this.year + "-" + this.month + "-" + ("0" + this.day).slice(-2) + "&" + this.toTime
+            const yearmonth = this.year + "-" + this.month
+            const daytime = ("0" + this.day).slice(-2) + "-" + this.from
+            //  + "-" + ("0" + this.day).slice(-2) + "&" + this.from
+            const untiltime = ("0" + this.day).slice(-2) + "-" + this.toTime
             
             const postData = {
-                schedule : schedule,
+                yearmonth: yearmonth,
+                daytime: daytime,
                 untiltime : untiltime,
                 title : this.title,
                 text : this.text
             }
             
-            // Access to XMLHttpRequest at 'https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev' from origin 'http://localhost:8080' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+            console.log(postData)
             
-            this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=2021-06").then((response) => {
-                console.table(response.data)
-            })
+            // this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=2021-06").then((response) => {
+            //     console.table(response.data)
+            // })
             
         }
     }
