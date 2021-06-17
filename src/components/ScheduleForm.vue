@@ -34,7 +34,6 @@ export default {
         postData() {
             const yearmonth = this.year + "-" + this.month
             const daytime = ("0" + this.day).slice(-2) + "-" + this.from
-            //  + "-" + ("0" + this.day).slice(-2) + "&" + this.from
             const untiltime = ("0" + this.day).slice(-2) + "-" + this.toTime
             
             const postData = {
