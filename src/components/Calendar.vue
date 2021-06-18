@@ -29,13 +29,16 @@ export default {
             year : "",
             month : "",
             day : 0,
-            showModal : false
+            showModal : false,
         };
     },
     computed: {
         calendars() {
             return this.getCalendar();
         }
+    },
+    created: {
+        
     },
     components: {
         ScheduleForm
@@ -59,7 +62,7 @@ export default {
             //"土"曜日の日付
             return date.add(6 - youbiNum, "days");
         },
-        async getCalendar() {
+        getCalendar() {
             
             let startDate = this.getStartDate();
             const endDate = this.getEndDate();
@@ -97,7 +100,7 @@ export default {
                 }
                 calendars.push(weekRow);
             }
-            console.table(calendars)
+            // console.table(calendars)
             
             return calendars;
             
