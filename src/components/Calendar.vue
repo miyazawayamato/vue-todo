@@ -33,9 +33,14 @@ export default {
         };
     },
     asyncComputed: {
-        calendars() {
+        async calendars() {
+            let todoData = []
+            await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
+                todoData = response.data
+            })
             
-            return this.getCalendar();
+            // console.log(todoData)
+            return this.getCalendar(todoData);
         }
     },
     components: {
@@ -60,17 +65,12 @@ export default {
             //"土"曜日の日付
             return date.add(6 - youbiNum, "days");
         },
-        getCalendar() {
+        getCalendar(todoData) {
             
             let startDate = this.getStartDate();
             const endDate = this.getEndDate();
             //カレンダーの行数を決定する
             const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
-            // {untilTime: "03-23:52", detail: "テスト", yearmonth: "2021-06", daytime: "03-22:52", title: "テスト"}
-            let todoData = []
-            await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
-                todoData = response.data
-            })
             
             let calendars = [];
             //週の数だけループ
@@ -79,7 +79,7 @@ export default {
                 let weekRow = [];
                 //1週間の日にち分(７日)ループ
                 for (let day = 0;  day < 7; day++) {
-                    // console.log(startDate.get("date"))
+                    
                     let todo = []
                     for(let i = 0; i < todoData.length; i++) {
                         
@@ -98,6 +98,7 @@ export default {
                 }
                 calendars.push(weekRow);
             }
+            
             console.table(calendars)
             
             return calendars;
