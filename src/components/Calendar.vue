@@ -9,8 +9,8 @@
         <div class="month">
             <div v-for="week, index1 in calendars" :key="index1" class="week">
                 <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day.date)" :class="classShading(index1, day.date)">
-                    <div >
-                        {{ day.date }}
+                    <div>
+                        <p>{{ day.date }}</p>
                     </div>
                 </div>
             </div>
@@ -21,32 +21,6 @@
 <script>
 import moment from "moment";
 import ScheduleForm from "./ScheduleForm";
-const yotei = [
-    {
-        schedule: "2021-06-14/21:00",
-        untilTime: "2021-06-14/22:00",
-        title: "予定A",
-        detail: "予定Aです"
-    },
-    {
-        schedule: "2021-06-15/21:00",
-        untilTime: "2021-06-15/22:00",
-        title: "予定B",
-        detail: "予定Bです"
-    },
-    {
-        schedule: "2021-06-16/21:00",
-        untilTime: "2021-06-16/22:00",
-        title: "予定C",
-        detail: "予定Cです"
-    },
-    {
-        schedule: "2021-06-17/21:00",
-        untilTime: "2021-06-17/22:00",
-        title: "予定C",
-        detail: "予定Cです"
-    },
-]
 export default {
     name: 'Calendar',
     data() {
@@ -92,38 +66,45 @@ export default {
             const endDate = this.getEndDate();
             //カレンダーの行数を決定する
             const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
-            // console.log(this.currentDate.format("YYYY-MM"))
+            // {untilTime: "03-23:52", detail: "テスト", yearmonth: "2021-06", daytime: "03-22:52", title: "テスト"}
             
-            // this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM"))
-            // .then((response) => {
-            //     console.table(response.data)
-            // })
-            
-            
-            let calendars = [];
-            //週の数だけループ
-            for (let week = 0; week < weekNumber; week++) {
+            this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM"))
+            .then((response) => {
                 
-                let weekRow = [];
-                //1週間の日にち分(７日)ループ
-                for (let day = 0;  day < 7; day++) {
+                let todoData = response.data
+                // console.table(todoData)
+                let calendars = [];
+                //週の数だけループ
+                for (let week = 0; week < weekNumber; week++) {
                     
-                    // 日にちの取得
-                    // startDate.get("date")
-                    // if (startDate.get("date") === axios) {
-                    //     {ireru}
-                    // }
-                    
-                    weekRow.push({date: startDate.get("date")});
-                    
-                    
-                    //日付を一日ずつ足していく
-                    startDate.add(1, "days");
-                    
+                    let weekRow = [];
+                    //1週間の日にち分(７日)ループ
+                    for (let day = 0;  day < 7; day++) {
+                        // console.log(startDate.get("date"))
+                        let todo = []
+                        for(let i = 0; i < todoData.length; i++) {
+                            
+                            if (startDate.get("date") == Number(todoData[i]["daytime"].slice( 0, 2 ))) {
+                                todo.push(todoData[i])
+                            }
+                            
+                        }
+                        
+                        weekRow.push({date: startDate.get("date"), todos: todo});
+                        
+                        
+                        //日付を一日ずつ足していく
+                        startDate.add(1, "days");
+                        
+                    }
+                    calendars.push(weekRow);
                 }
-                calendars.push(weekRow);
-            }
-            return calendars;
+                // console.table(calendars)
+                return calendars;
+                
+            })
+            
+            
         },
         nextMonth() {
             this.currentDate = moment(this.currentDate).add(1, "month");
