@@ -32,13 +32,11 @@ export default {
             showModal : false,
         };
     },
-    computed: {
+    asyncComputed: {
         calendars() {
+            
             return this.getCalendar();
         }
-    },
-    created: {
-        
     },
     components: {
         ScheduleForm
@@ -70,9 +68,9 @@ export default {
             const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
             // {untilTime: "03-23:52", detail: "テスト", yearmonth: "2021-06", daytime: "03-22:52", title: "テスト"}
             let todoData = []
-            // await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
-            //     todoData = response.data
-            // })
+            await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
+                todoData = response.data
+            })
             
             let calendars = [];
             //週の数だけループ
@@ -100,7 +98,7 @@ export default {
                 }
                 calendars.push(weekRow);
             }
-            // console.table(calendars)
+            console.table(calendars)
             
             return calendars;
             
