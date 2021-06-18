@@ -1,6 +1,8 @@
 <template>
     <div>
-        <ScheduleForm :year="year" :month="month" :day="day"></ScheduleForm>
+        <div class="overlay" v-show="showModal">
+            <ScheduleForm :year="year" :month="month" :day="day" :close="closeModal" class="modal"></ScheduleForm>
+        </div>
         <h2>{{ currentDate.format("YYYY年MM月") }}</h2>
         <button @click="prevMonth">前の月</button>
         <button @click="nextMonth">次の月</button>
@@ -52,7 +54,8 @@ export default {
             currentDate: moment(),
             year : "",
             month : "",
-            day : "",
+            day : 0,
+            showModal : false
         };
     },
     computed: {
@@ -84,11 +87,17 @@ export default {
             return date.add(6 - youbiNum, "days");
         },
         getCalendar() {
+            
             let startDate = this.getStartDate();
             const endDate = this.getEndDate();
             //カレンダーの行数を決定する
             const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
+            // console.log(this.currentDate.format("YYYY-MM"))
             
+            // this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM"))
+            // .then((response) => {
+            //     console.table(response.data)
+            // })
             
             
             let calendars = [];
@@ -142,7 +151,11 @@ export default {
             this.year = this.currentDate.format("YYYY")
             this.month = this.currentDate.format("MM")
             this.day = day
+            this.showModal = true
             
+        },
+        closeModal() {
+            this.showModal = false
         }
     },
 }
@@ -164,9 +177,28 @@ export default {
     min-height:125px;
     border-right:1px solid black;
     border-bottom:1px solid black;
+    cursor: pointer;
 }
 .thin {
     background-color: aqua;
     pointer-events: none
+}
+.overlay {
+    z-index:1;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background-color:rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal {
+    z-index:2;
+    width:50%;
+    padding: 1em;
+    background:#fff;
 }
 </style>

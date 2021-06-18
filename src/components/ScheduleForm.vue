@@ -16,12 +16,15 @@
         <div>
             <button @click="postData">送信する</button>
         </div>
+        <button v-on:click="close">閉じる</button>
+        <!-- <button >閉じる</button> -->
     </div>
 </template>
 
 <script>
 export default {
-    props: ["year", "month", "day"],
+    // props: ["year", "month", "day", close],
+    props : {year : String, month : String, day : Number, close : Function},
     data() {
         return {
             from : "",
@@ -39,14 +42,14 @@ export default {
             const postData = {
                 yearmonth: yearmonth,
                 daytime: daytime,
-                untiltime : untiltime,
+                untilTime : untiltime,
                 title : this.title,
-                text : this.text
+                detail : this.text
             }
             
-            console.log(postData)
+            // console.log(postData)
             
-            // this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=2021-06").then((response) => {
+            // this.axios.post("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
             //     console.table(response.data)
             // })
             
