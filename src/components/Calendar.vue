@@ -10,7 +10,7 @@
             <div v-for="week, index1 in calendars" :key="index1" class="week">
                 <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day)" :class="classShading(index1, day.date)">
                     <div>
-                        <p>{{ day.date }}</p>
+                        <p class="day-disp">{{ day.date }}</p>
                         <p class="noMonth">{{ day.todos.length }}件</p>
                     </div>
                 </div>
@@ -37,10 +37,10 @@ export default {
     asyncComputed: {
         async calendars() {
             let todoData = []
-            await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
-                todoData = response.data
-            })
-            
+            // await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
+            //     todoData = response.data
+            // })
+            console.log(todoData)
             return this.getCalendar(todoData);
         }
     },
@@ -172,11 +172,15 @@ export default {
     cursor: pointer;
 }
 .thin {
-    background-color: aqua;
+    background-color: rgb(187, 184, 184);
     pointer-events: none
 }
+/* 今月出ないものの件数を非表示に */
 .thin .noMonth{
     display: none;
+}
+.day-disp {
+    font-weight: 600;
 }
 .overlay {
     z-index:1;

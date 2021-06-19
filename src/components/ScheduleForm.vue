@@ -23,8 +23,11 @@
         <div class="time-table">
             <div v-for="schedule, index in schedules" :key="index">
                 <div>
-                    <span>{{schedule.daytime}}</span><span>~</span><span>{{schedule.untilTime}}</span>
-                    <span>{{schedule.title}}</span><span >削除する</span>
+                    <span>{{schedule.daytime}}</span>
+                    <span>~</span>
+                    <span>{{schedule.untilTime}}</span>
+                    <span>{{schedule.title}}</span>
+                    <button @click="deleteData(schedule.daytime)" class="delete-button">削除する</button>
                 </div>
             </div>
         </div>
@@ -69,10 +72,13 @@ export default {
             // })
             
         },
-        deleteData() {
-            
-            
-            this.axios.delete("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
+        deleteData(daytime) {
+            //daytimeはschedule.daytimeを引数で受け取る
+            //yearmonthは桁数に注意して
+            const yearmonth = this.year + "-" + this.month
+            const deleteDate = "?yearmonth=" + yearmonth + "&" + "daytime=" + daytime
+            // console.log("?yearmonth=" + yearmonth + "+" + "daytime=" + daytime)
+            this.axios.delete("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev" + deleteDate).then((response) => {
                 console.table(response.data)
             })
         },
