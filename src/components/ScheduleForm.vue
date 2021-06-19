@@ -71,6 +71,10 @@ export default {
         },
         deleteData() {
             
+            
+            this.axios.delete("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
+                console.table(response.data)
+            })
         },
         onForm() {
             this.showForm = true
