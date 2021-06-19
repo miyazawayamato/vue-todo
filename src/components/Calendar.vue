@@ -41,8 +41,6 @@ export default {
                 todoData = response.data
             })
             
-            console.log(todoData)
-            // this.schedule = todoData
             return this.getCalendar(todoData);
         }
     },
