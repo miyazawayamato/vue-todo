@@ -1,16 +1,17 @@
 <template>
     <div>
         <div class="overlay" v-show="showModal">
-            <ScheduleForm :year="year" :month="month" :day="day" :close="closeModal" class="modal"></ScheduleForm>
+            <ScheduleForm :year="year" :month="month" :day="day" :close="closeModal" :schedules="schedules" class="modal"></ScheduleForm>
         </div>
         <h2>{{ currentDate.format("YYYY年MM月") }}</h2>
         <button @click="prevMonth">前の月</button>
         <button @click="nextMonth">次の月</button>
         <div class="month">
             <div v-for="week, index1 in calendars" :key="index1" class="week">
-                <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day.date)" :class="classShading(index1, day.date)">
+                <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day)" :class="classShading(index1, day.date)">
                     <div>
-                        {{ day.date }}
+                        <p>{{ day.date }}</p>
+                        <p class="noMonth">{{ day.todos.length }}件</p>
                     </div>
                 </div>
             </div>
@@ -29,6 +30,7 @@ export default {
             year : "",
             month : "",
             day : 0,
+            schedules : [],
             showModal : false,
         };
     },
@@ -39,7 +41,8 @@ export default {
                 todoData = response.data
             })
             
-            // console.log(todoData)
+            console.log(todoData)
+            // this.schedule = todoData
             return this.getCalendar(todoData);
         }
     },
@@ -72,6 +75,7 @@ export default {
             //カレンダーの行数を決定する
             const weekNumber = Math.ceil(endDate.diff(startDate, "days") / 7);
             
+            
             let calendars = [];
             //週の数だけループ
             for (let week = 0; week < weekNumber; week++) {
@@ -80,16 +84,23 @@ export default {
                 //1週間の日にち分(７日)ループ
                 for (let day = 0;  day < 7; day++) {
                     
+                    let current = startDate.get("date")
                     let todo = []
-                    for(let i = 0; i < todoData.length; i++) {
-                        
-                        if (startDate.get("date") == Number(todoData[i]["daytime"].slice( 0, 2 ))) {
-                            todo.push(todoData[i])
+                    // 先月と来月の場合にはtodoを調べない
+                    // weekが0かつ日にちが二桁 または weekがweekNumber-1かつ日にちが一桁
+                    if((week == 0 && String(current).length == 2) || (week == weekNumber - 1 && String(current).length == 1)) {
+                    } else {
+                        for(let i = 0; i < todoData.length; i++) {
+                            
+                            if (current == Number(todoData[i]["daytime"].slice( 0, 2 )) ) {
+                                todo.push(todoData[i])
+                            }
+                            
                         }
                         
                     }
                     
-                    weekRow.push({date: startDate.get("date"), todos : todo});
+                    weekRow.push({date: current, todos : todo});
                     
                     
                     //日付を一日ずつ足していく
@@ -99,7 +110,7 @@ export default {
                 calendars.push(weekRow);
             }
             
-            console.table(calendars)
+            // console.table(calendars)b
             
             return calendars;
             
@@ -123,13 +134,17 @@ export default {
                 return "dark"
             }
         },
-        getDay(day) {
-            // //先月と来月を判断できない
-            let date = this.currentDate.format("YYYY-MM-") + day
+        getDay(dayData) {
+            
+            const day = dayData.date
+            const todo = dayData.todos
+            // let date = this.currentDate.format("YYYY-MM-") + day
             // console.log(date)
             this.year = this.currentDate.format("YYYY")
             this.month = this.currentDate.format("MM")
             this.day = day
+            this.schedules = todo
+            
             this.showModal = true
             
         },
@@ -161,6 +176,9 @@ export default {
 .thin {
     background-color: aqua;
     pointer-events: none
+}
+.thin .noMonth{
+    display: none;
 }
 .overlay {
     z-index:1;

@@ -1,36 +1,51 @@
 <template>
     <div>
-        <p>{{year}}年{{month}}月{{day}}日</p>
-        <div>
-            <label>何時から：<input type="time" v-model="from"></label>
+        <div v-show="showForm">
+            <p>{{year}}年{{month}}月{{day}}日</p>
+            <div>
+                <label>何時から：<input type="time" v-model="from"></label>
+            </div>
+            <div>
+                <label>何時まで：<input type="time" v-model="toTime"></label>
+            </div>
+            <div>
+                <input type="text" v-model="title">
+            </div>
+            <div>
+                <textarea name="" id="" cols="30" rows="10" v-model="text"></textarea>
+            </div>
+            <div>
+                <button @click="postData">送信する</button>
+            </div>
+            <button @click="offForm">閉じる</button>
         </div>
-        <div>
-            <label>何時まで：<input type="time" v-model="toTime"></label>
-        </div>
-        <div>
-            <input type="text" v-model="title">
-        </div>
-        <div>
-            <textarea name="" id="" cols="30" rows="10" v-model="text"></textarea>
-        </div>
-        <div>
-            <button @click="postData">送信する</button>
+        <button @click="onForm">予定を追加する</button>
+        <div class="time-table">
+            <div v-for="schedule, index in schedules" :key="index">
+                <div>
+                    <span>{{schedule.daytime}}</span><span>~</span><span>{{schedule.untilTime}}</span>
+                    <span>{{schedule.title}}</span><span></span>
+                </div>
+            </div>
         </div>
         <button v-on:click="close">閉じる</button>
-        <!-- <button >閉じる</button> -->
     </div>
 </template>
 
 <script>
+// detail: (...)
+// title: (...)
+// untilTime: (...)
+// yearmonth: (...)
 export default {
-    // props: ["year", "month", "day", close],
-    props : {year : String, month : String, day : Number, close : Function},
+    props : {year : String, month : String, day : Number, schedules: Array, close : Function},
     data() {
         return {
             from : "",
             toTime : "",
             title : "",
-            text : ""
+            text : "",
+            showForm : false
         }
     },
     methods: {
@@ -53,7 +68,30 @@ export default {
             //     console.table(response.data)
             // })
             
-        }
+        },
+        onForm() {
+            this.showForm = true
+        },
+        offForm() {
+            this.showForm = false
+        },
     }
 }
 </script>
+<style>
+.time-table {
+    margin: 20px 0;
+    overflow: scroll;
+    height: 300px;
+}
+.time-box {
+    border: 1px solid;
+    
+}
+.n-time {
+    text-align: left;
+}
+.v-minits {
+    visibility:hidden;
+}
+</style>
