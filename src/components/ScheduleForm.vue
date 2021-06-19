@@ -24,7 +24,7 @@
             <div v-for="schedule, index in schedules" :key="index">
                 <div>
                     <span>{{schedule.daytime}}</span><span>~</span><span>{{schedule.untilTime}}</span>
-                    <span>{{schedule.title}}</span><span></span>
+                    <span>{{schedule.title}}</span><span >削除する</span>
                 </div>
             </div>
         </div>
@@ -67,6 +67,9 @@ export default {
             // this.axios.post("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
             //     console.table(response.data)
             // })
+            
+        },
+        deleteData() {
             
         },
         onForm() {
