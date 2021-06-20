@@ -1,6 +1,10 @@
 <template>
     <div>
-        <div v-show="showForm">
+        <div class="close-modal-but">
+            <button v-on:click="close">✖</button>
+        </div>
+        <button @click="onForm">予定を追加する</button>
+        <div v-show="showForm" class="todo-form">
             <p>{{year}}年{{month}}月{{day}}日</p>
             <div>
                 <label>何時から：<input type="time" v-model="from"></label>
@@ -19,7 +23,6 @@
             </div>
             <button @click="offForm">閉じる</button>
         </div>
-        <button @click="onForm">予定を追加する</button>
         <div class="time-table">
             <div v-for="schedule, index in schedules" :key="index">
                 <div>
@@ -31,7 +34,6 @@
                 </div>
             </div>
         </div>
-        <button v-on:click="close">閉じる</button>
     </div>
 </template>
 
@@ -92,10 +94,16 @@ export default {
 }
 </script>
 <style>
+.close-modal-but {
+    text-align: right;
+}
+.todo-form{
+    border: 1px solid;
+}
 .time-table {
     margin: 20px 0;
     overflow: scroll;
-    height: 300px;
+    max-height: 300px;
 }
 .time-box {
     border: 1px solid;

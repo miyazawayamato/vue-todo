@@ -4,8 +4,10 @@
             <ScheduleForm :year="year" :month="month" :day="day" :close="closeModal" :schedules="schedules" class="modal"></ScheduleForm>
         </div>
         <h2>{{ currentDate.format("YYYY年MM月") }}</h2>
-        <button @click="prevMonth">前の月</button>
-        <button @click="nextMonth">次の月</button>
+        <div class="month-change">
+            <button @click="prevMonth">前の月</button>
+            <button @click="nextMonth">次の月</button>
+        </div>
         <div class="month">
             <div v-for="week, index1 in calendars" :key="index1" class="week">
                 <div v-for="day, index2 in week" :key="index2" class="day" @click="getDay(day)" :class="classShading(index1, day.date)">
@@ -160,13 +162,16 @@ export default {
     margin: 0 auto;
     border-top:1px solid black;
 }
+.month-change {
+    margin: 10px 0;
+}
 .week {
     display:flex;
     border-left:1px solid black;
 }
 .day {
     flex:1;
-    min-height:125px;
+    min-height:110px;
     border-right:1px solid black;
     border-bottom:1px solid black;
     cursor: pointer;
@@ -181,6 +186,8 @@ export default {
 }
 .day-disp {
     font-weight: 600;
+    font-size: 23px;
+    margin: 5px 0 10px 0;
 }
 .overlay {
     z-index:1;
@@ -196,7 +203,7 @@ export default {
 }
 .modal {
     z-index:2;
-    width:50%;
+    width:40%;
     padding: 1em;
     background:#fff;
 }
