@@ -1,36 +1,43 @@
 <template>
     <div>
         <div class="close-modal-but">
-            <button v-on:click="close">✖</button>
+            <div>
+                <button @click="offForm" v-show="showForm">戻る</button>
+                <button @click="onForm" v-show="showSchedule">予定を追加する</button>
+            </div>
+            <div>
+                <button v-on:click="close">✖</button>
+            </div>
         </div>
-        <button @click="onForm">予定を追加する</button>
         <div v-show="showForm" class="todo-form">
             <p>{{year}}年{{month}}月{{day}}日</p>
             <div>
-                <label>何時から：<input type="time" v-model="from"></label>
+                <label>何時から<input type="time" v-model="from"></label>
+                <label>何時まで<input type="time" v-model="toTime"></label>
             </div>
-            <div>
-                <label>何時まで：<input type="time" v-model="toTime"></label>
-            </div>
-            <div>
+            <div class="form-title">
+                <label for="">タイトル</label>
                 <input type="text" v-model="title">
             </div>
             <div>
-                <textarea name="" id="" cols="30" rows="10" v-model="text"></textarea>
+                <p style="margin:0">内容</p>
+                <textarea cols="40" rows="10" v-model="text"></textarea>
             </div>
-            <div>
+            <div class="form-button">
                 <button @click="postData">送信する</button>
             </div>
-            <button @click="offForm">閉じる</button>
         </div>
-        <div class="time-table">
-            <div v-for="schedule, index in schedules" :key="index">
-                <div>
-                    <span>{{schedule.daytime}}</span>
-                    <span>~</span>
-                    <span>{{schedule.untilTime}}</span>
-                    <span>{{schedule.title}}</span>
-                    <button @click="deleteData(schedule.daytime)" class="delete-button">削除する</button>
+        <div class="time-table" v-show="showSchedule">
+            <p style="margin-top:0">予定</p>
+            <div class="time-schedule">
+                <div v-for="schedule, index in schedules" :key="index">
+                    <div>
+                        <span>{{schedule.daytime}}</span>
+                        <span>~</span>
+                        <span>{{schedule.untilTime}}</span>
+                        <span>{{schedule.title}}</span>
+                        <button @click="deleteData(schedule.daytime)" class="delete-button">削除する</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,7 +57,8 @@ export default {
             toTime : "",
             title : "",
             text : "",
-            showForm : false
+            showForm : false,
+            showSchedule : true
         }
     },
     methods: {
@@ -86,23 +94,34 @@ export default {
         },
         onForm() {
             this.showForm = true
+            this.showSchedule = false
         },
         offForm() {
             this.showForm = false
+            this.showSchedule = true
         },
     }
 }
 </script>
 <style>
 .close-modal-but {
-    text-align: right;
+    display: flex;
+    justify-content: space-between;
 }
-.todo-form{
+/* .todo-form{
     border: 1px solid;
+} */
+.form-title{
+    margin-top: 10px;
+}
+.form-button {
+    margin-top: 10px;
 }
 .time-table {
-    margin: 20px 0;
-    overflow: scroll;
+    margin: 10px 0;
+}
+.time-schedule {
+    overflow-y: scroll;
     max-height: 300px;
 }
 .time-box {

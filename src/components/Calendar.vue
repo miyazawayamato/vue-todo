@@ -204,7 +204,7 @@ export default {
 .modal {
     z-index:2;
     width:40%;
-    padding: 1em;
+    padding: 15px;
     background:#fff;
 }
 </style>
