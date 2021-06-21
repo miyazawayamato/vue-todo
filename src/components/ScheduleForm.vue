@@ -137,4 +137,8 @@ export default {
 .delete-button {
     cursor: pointer;
 }
+.delete-button:hover {
+    font-weight: 500;
+    text-decoration: underline;
+}
 </style>
