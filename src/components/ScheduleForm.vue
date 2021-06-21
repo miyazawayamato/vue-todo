@@ -36,7 +36,7 @@
                         <span>~</span>
                         <span>{{schedule.untilTime}}</span>
                         <span>{{schedule.title}}</span>
-                        <button @click="deleteData(schedule.daytime)" class="delete-button">削除する</button>
+                        <span @click="deleteData(schedule.daytime)" class="delete-button">削除する</span>
                     </div>
                 </div>
             </div>
@@ -133,5 +133,8 @@ export default {
 }
 .v-minits {
     visibility:hidden;
+}
+.delete-button {
+    cursor: pointer;
 }
 </style>
