@@ -144,8 +144,6 @@ export default {
             this.month = this.currentDate.format("MM")
             this.day = day
             
-            //日付順に並べる
-            //日にちのカット
             for (let i = 0; i < todo.length; i++) {
                 
                 todo[i]["daytime"] = todo[i]["daytime"].slice(3)

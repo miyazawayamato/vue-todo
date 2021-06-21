@@ -31,7 +31,7 @@
             <p style="margin-top:0">予定</p>
             <div class="time-schedule">
                 <div v-for="schedule, index in schedules" :key="index">
-                    <div>
+                    <div v-bind:title="schedule.detail">
                         <span>{{schedule.daytime}}</span>
                         <span>~</span>
                         <span>{{schedule.untilTime}}</span>
@@ -76,10 +76,13 @@ export default {
             }
             
             // console.log(postData)
-            
-            // this.axios.post("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
-            //     console.table(response.data)
-            // })
+            //成功した場合
+            this.axios.post("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
+                console.table(response.data)
+                if (response.data === "success") {
+                    console.table("成功")
+                }
+            })
             
         },
         deleteData(daytime) {
