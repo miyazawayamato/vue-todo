@@ -12,8 +12,12 @@
         <div v-show="showForm" class="todo-form">
             <p>{{year}}年{{month}}月{{day}}日</p>
             <div>
-                <label>何時から<input type="time" v-model="from"></label>
-                <label>何時まで<input type="time" v-model="toTime"></label>
+                <div class="form-time">
+                    <label>何時から<input type="time" v-model="from"></label>
+                </div>
+                <div class="form-time">
+                    <label>何時まで<input type="time" v-model="toTime"></label>
+                </div>
             </div>
             <div class="form-title">
                 <label for="">タイトル</label>
@@ -21,7 +25,7 @@
             </div>
             <div>
                 <p style="margin:0">内容</p>
-                <textarea cols="40" rows="10" v-model="text"></textarea>
+                <textarea cols="40" rows="10" v-model="text" class="form-detail"></textarea>
             </div>
             <div class="form-button">
                 <button @click="postData">送信する</button>
@@ -50,9 +54,6 @@
 // untilTime: (...)
 // yearmonth: (...)
 
-//削除時の動き
-//post時の動きとソート モーダルを閉じた後のpropsの保持
-
 export default {
     props : {year : String, month : String, day : Number, schedules: Array, close : Function},
     data() {
@@ -79,8 +80,6 @@ export default {
                 detail : this.text
             }
             
-            // console.log(postData)
-            //成功した場合
             this.axios.post("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
                 console.table(response.data)
                 if (response.data === "success") {
@@ -151,5 +150,11 @@ export default {
 .delete-button:hover {
     font-weight: 500;
     text-decoration: underline;
+}
+@media screen and (max-width: 480px) {
+.form-detail {
+    display: inline-block;
+    width: 80%;
+}
 }
 </style>
