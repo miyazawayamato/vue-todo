@@ -36,7 +36,7 @@
                         <span>~</span>
                         <span>{{schedule.untilTime.slice(3)}}</span>
                         <span>{{schedule.title}}</span>
-                        <span @click="deleteData(schedule.daytime)" class="delete-button">削除する</span>
+                        <span @click="deleteData(schedule.daytime, index)" class="delete-button">削除する</span>
                     </div>
                 </div>
             </div>
@@ -92,14 +92,15 @@ export default {
             })
             
         },
-        deleteData(daytime) {
-            //daytimeはschedule.daytimeを引数で受け取る
-            //yearmonthは桁数に注意して
+        deleteData(daytime, index) {
+            
             const yearmonth = this.year + "-" + this.month
             const deleteDate = "?yearmonth=" + yearmonth + "&" + "daytime=" + daytime
-            // console.log("?yearmonth=" + yearmonth + "+" + "daytime=" + daytime)
             this.axios.delete("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev" + deleteDate).then((response) => {
-                console.table(response.data)
+                // console.table(response.data.)
+                if (response.data.ResponseMetadata.HTTPStatusCode == 200) {
+                    this.schedules.splice(index, 1)
+                }
             })
         },
         onForm() {
