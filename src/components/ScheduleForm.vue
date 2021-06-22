@@ -32,9 +32,9 @@
             <div class="time-schedule">
                 <div v-for="schedule, index in schedules" :key="index">
                     <div v-bind:title="schedule.detail">
-                        <span>{{schedule.daytime}}</span>
+                        <span>{{schedule.daytime.slice(3)}}</span>
                         <span>~</span>
-                        <span>{{schedule.untilTime}}</span>
+                        <span>{{schedule.untilTime.slice(3)}}</span>
                         <span>{{schedule.title}}</span>
                         <span @click="deleteData(schedule.daytime)" class="delete-button">削除する</span>
                     </div>
@@ -49,6 +49,10 @@
 // title: (...)
 // untilTime: (...)
 // yearmonth: (...)
+
+//削除時の動き
+//post時の動きとソート モーダルを閉じた後のpropsの保持
+
 export default {
     props : {year : String, month : String, day : Number, schedules: Array, close : Function},
     data() {
@@ -81,6 +85,9 @@ export default {
                 console.table(response.data)
                 if (response.data === "success") {
                     console.table("成功")
+                    this.schedules.push(postData)
+                    this.showForm = false
+                    this.showSchedule = true
                 }
             })
             
