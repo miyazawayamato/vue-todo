@@ -49,11 +49,6 @@
 </template>
 
 <script>
-// detail: (...)
-// title: (...)
-// untilTime: (...)
-// yearmonth: (...)
-
 export default {
     props : {year : String, month : String, day : Number, schedules: Array, close : Function},
     data() {
@@ -118,9 +113,6 @@ export default {
     display: flex;
     justify-content: space-between;
 }
-/* .todo-form{
-    border: 1px solid;
-} */
 .form-title{
     margin-top: 10px;
 }

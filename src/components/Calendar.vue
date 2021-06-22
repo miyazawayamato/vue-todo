@@ -39,10 +39,10 @@ export default {
     asyncComputed: {
         async calendars() {
             let todoData = []
-            // await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
-            //     todoData = response.data
-            // })
-            console.log(todoData)
+            await this.axios.get("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev?month=" + this.currentDate.format("YYYY-MM")).then((response) => {
+                todoData = response.data
+            })
+            // console.log(todoData)
             return this.getCalendar(todoData);
         }
     },
