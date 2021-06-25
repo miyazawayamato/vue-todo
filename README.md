@@ -1,30 +1,16 @@
-# vue-cal
+## 予定表カレンダー
 
-> A Vue.js project
+### アプリ概要
+カレンダーに予定を登録する機能を付けました  
+デプロイにAWSのAPIGatewayやlambda等を使用  
+[サイトへ移動](https://miyazawayamato.github.io/vue-todo/dist/index.html#/)
 
-## Build Setup
+### アプリ機能
+Vue.jsを使用してSPA  
+AWSのlambdaで予定を登録や削除の処理  
+APIGatewayでAPI作成  
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### 使用技術
+言語：python javascript(vue)  
+デプロイ：APIGateway lambda  
+データベース：Amazon DynamoDB
