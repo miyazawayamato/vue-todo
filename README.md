@@ -3,7 +3,9 @@
 ### アプリ概要
 カレンダーに予定を登録する機能を付けました  
 デプロイにAWSのAPIGatewayやlambda等を使用  
-[サイトへ移動](https://miyazawayamato.github.io/vue-todo/dist/index.html#/)
+[サイトへ移動](https://miyazawayamato.github.io/vue-todo/dist/index.html#/)  
+[lambda(python)のリポジトリ](https://github.com/miyazawayamato/lambda-python)
+
 
 ### アプリ機能
 Vue.jsを使用してSPA  
