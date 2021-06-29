@@ -27,6 +27,9 @@
                 <p style="margin:0">内容</p>
                 <textarea cols="40" rows="10" v-model="text" class="form-detail"></textarea>
             </div>
+            <div>
+                <p style="color:red">{{valiMesse}}</p>
+            </div>
             <div class="form-button">
                 <button @click="postData">送信する</button>
             </div>
@@ -49,6 +52,7 @@
 </template>
 
 <script>
+import {validation} from "../validation/validation"
 export default {
     props : {year : String, month : String, day : Number, schedules: Array, close : Function},
     data() {
@@ -57,6 +61,7 @@ export default {
             toTime : "",
             title : "",
             text : "",
+            valiMesse : "",
             showForm : false,
             showSchedule : true
         }
@@ -73,6 +78,11 @@ export default {
                 untilTime : untiltime,
                 title : this.title,
                 detail : this.text
+            }
+            
+            this.valiMesse = validation(postData)
+            if(validation(postData)) {
+                return
             }
             
             this.axios.post("https://9t39q121ri.execute-api.ap-northeast-1.amazonaws.com/dev", postData).then((response) => {
@@ -147,6 +157,7 @@ export default {
 .form-detail {
     display: inline-block;
     width: 80%;
+    
 }
 }
 </style>
